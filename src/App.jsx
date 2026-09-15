@@ -1,13 +1,17 @@
 import Form from "./components/Form";
 import FilterButton from "./components/FilterButton";
 import Todo from "./components/Todo";
+import { useState } from "react";
 
 function App(props) {
+  const [tasks, setTasks] = useState(props.tasks);
+
   function addTask(name) {
-    alert(name + " (called with a callback function)");
+    const newTask = { id: "id", name, completed: false };
+    setTasks([...tasks, newTask]);
   }
 
-  const taskList = props.tasks?.map((task) => (
+  const taskList = tasks?.map((task) => (
     <Todo
       id={task.id}
       name={task.name}
@@ -15,6 +19,7 @@ function App(props) {
       key={task.id}
     />
   ));
+
   return (
     <div className="todoapp stack-large">
       <h1>TodoMatic</h1>
