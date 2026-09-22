@@ -5,6 +5,7 @@ import { useState } from "react";
 import { nanoid } from "nanoid";
 
 function App(props) {
+  const [isEditing, setEditing] = useState(false);
   const [tasks, setTasks] = useState(props.tasks);
 
   function addTask(name) {
@@ -28,16 +29,17 @@ function App(props) {
     setTasks(remainingTasks);
   }
 
-  const taskList = tasks?.map((task) => (
-    <Todo
-      id={task.id}
-      name={task.name}
-      completed={task.completed}
-      key={task.id}
-      toggleTaskCompleted={toggleTaskCompleted}
-      deleteTask={deleteTask}
-    />
-  ));
+  const taskList = tasks.map((task) => (
+  <Todo
+    id={task.id}
+    name={task.name}
+    completed={task.completed}
+    key={task.id}
+    toggleTaskCompleted={toggleTaskCompleted}
+    deleteTask={deleteTask}
+    editTask={editTask}
+  />
+));
 
   const tasksNoun = taskList.length !== 1 ? "tasks" : "task";
   const headingText = `${taskList.length} ${tasksNoun} remaining`;
