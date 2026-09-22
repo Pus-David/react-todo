@@ -22,6 +22,11 @@ function App(props) {
   }
 
   function addTask(name) {
+    if (name.trim().toLowerCase() === "react") {
+      alert('A "react" szó nem adható hozzá feladatként.');
+      return;
+    }
+
     const newTask = { id: `todo-${nanoid()}`, name, completed: false };
     setTasks([...tasks, newTask]);
   }
