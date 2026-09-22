@@ -8,6 +8,19 @@ function App(props) {
   const [isEditing, setEditing] = useState(false);
   const [tasks, setTasks] = useState(props.tasks);
 
+  function editTask(id, newName) {
+    const editedTaskList = tasks.map((task) => {
+      // if this task has the same ID as the edited task
+      if (id === task.id) {
+        // use object spread to make a new object
+        // whose `name` prop has been updated
+        return { ...task, name: newName };
+      }
+      return task;
+    });
+    setTasks(editedTaskList);
+  }
+
   function addTask(name) {
     const newTask = { id: `todo-${nanoid()}`, name, completed: false };
     setTasks([...tasks, newTask]);
