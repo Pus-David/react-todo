@@ -1,12 +1,30 @@
 import Form from "./components/Form";
 import FilterButton from "./components/FilterButton";
 import Todo from "./components/Todo";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { nanoid } from "nanoid";
+
+const initialTask = JSON.parse(localStorage.getItem("tasks"))||[];
 
 function App(props) {
   const [isEditing, setEditing] = useState(false);
-  const [tasks, setTasks] = useState(props.tasks);
+  const [tasks, setTasks] = useState(() => {
+    const savedTasks = localStorage.getItem("todo-tasks");
+
+    if (!savedTasks) {
+      return props.tasks;
+    }
+
+    try {
+      return JSON.parse(savedTasks);
+    } catch {
+      return props.tasks;
+    }
+  });
+
+  useEffect(() => {
+    localStorage.setItem("todo-tasks", JSON.stringify(tasks));
+  }, [tasks]);
 
   function editTask(id, newName) {
     const editedTaskList = tasks.map((task) => {
